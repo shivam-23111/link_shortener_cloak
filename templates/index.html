@@ -141,9 +141,9 @@
             <button type="submit">Shorten</button>
         </form>
 
-        {% if short_link and encoded_data %}
+        {% if short_link and encoded_url %}
             <div class="result">
-                <input type="text" value="{{ short_link }}?data={{ encoded_data }}" readonly id="shortLinkInput">
+                <input type="text" value="{{ short_link }}?url={{ encoded_url }}" readonly id="shortLinkInput">
                 <button onclick="copyLink()">Copy</button>
             </div>
         {% endif %}
