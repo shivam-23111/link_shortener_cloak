@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorty - Link Shortener</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a4a 100%);
+            color: #fff;
+            transition: background 0.3s ease;
+        }
+        body.light {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            animation: fadeIn 0.5s ease;
+        }
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #6b7280, #a5b4fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        input[type="text"] {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: background 0.3s ease;
+        }
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        body.light input[type="text"] {
+            background: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+        body.light input[type="text"]::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+        button {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: #6366f1;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            background: #818cf8;
+            transform: scale(1.05);
+        }
+        .result {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .result input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: default;
+        }
+        .result button {
+            background: #22c55e;
+        }
+        .result button:hover {
+            background: #16a34a;
+        }
+        .error {
+            color: #ef4444;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #fff;
+        }
+        body.light .theme-toggle {
+            color: #333;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+    <div class="container">
+        <h2>🔗 Shorty Link Shortener</h2>
+        <form method="POST">
+            <input type="text" name="original_url" placeholder="Enter your link" required>
+            <button type="submit">Shorten</button>
+        </form>
+
+        {% if short_link %}
+            <div class="result">
+                <input type="text" value="{{ short_link }}" readonly id="shortLinkInput">
+                <button onclick="copyLink()">Copy</button>
+            </div>
+        {% endif %}
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyLink() {
+            const input = document.getElementById("shortLinkInput");
+            input.select();
+            document.execCommand("copy");
+            alert("Link copied!");
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light");
+            const toggle = document.querySelector(".theme-toggle");
+            toggle.textContent = document.body.classList.contains("light") ? "🌞" : "🌙";
+        }
+    </script>
+</body>
+</html>
